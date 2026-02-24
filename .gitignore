@@ -10,7 +10,8 @@ _pycache__/
 .eggs/
 build/
 dist/
-poetry.lock
+bazel-*
+.venv/
 
 # Tests
 .pytest_cache/
@@ -21,5 +22,5 @@ poetry.lock
 # Other
 *.DS_Store
 
-# PyCharm
-.idea
+# Compiled C/C++ extensions
+*.so
