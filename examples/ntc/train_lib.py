@@ -3,12 +3,12 @@
 import collections
 import math
 import os
-from absl import logging
+
 import equinox as eqx
 import jax
-import optax
-
 import ntc
+import optax
+from absl import logging
 
 
 @eqx.filter_jit
@@ -70,7 +70,7 @@ def train(config, checkpoint_path, train_iterator, rng, start_path=None):
   opt_state = optimizer.init(eqx.filter(model, eqx.is_array))
   try:
     model, start_epoch, opt_state = load_state(start_path, model, opt_state)
-  except IOError:
+  except OSError:
     start_epoch = 0
 
   @eqx.filter_jit
@@ -101,7 +101,7 @@ def train(config, checkpoint_path, train_iterator, rng, start_path=None):
     save_state(checkpoint_path, model, epoch, opt_state)
 
     metrics = collections.defaultdict(lambda: 0.)
-    step_metrics = dict()
+    step_metrics = {}
 
     for _ in range(config.num_steps_per_epoch):
       rng, train_rng = jax.random.split(rng)

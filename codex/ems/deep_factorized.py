@@ -14,12 +14,13 @@
 # ==============================================================================
 """Deep fully factorized entropy model based on cumulative density."""
 
-from typing import Optional, Tuple
+
+import jax
+import jax.numpy as jnp
+from jax import nn
+
 from codex.ems import continuous
 from codex.ops import quantization
-import jax
-from jax import nn
-import jax.numpy as jnp
 
 Array = jax.Array
 ArrayLike = jax.typing.ArrayLike
@@ -103,8 +104,8 @@ class DeepFactorizedEntropyModelBase(continuous.ContinuousEntropyModel):
   def _upper_lower_logits(
       self,
       center: ArrayLike,
-      temperature: Optional[ArrayLike] = None,
-  ) -> Tuple[Array, ...]:
+      temperature: ArrayLike | None = None,
+  ) -> tuple[Array, ...]:
     upper = quantization.soft_round_inverse(center + .5, temperature)
     lower = upper - 1.
     logits_upper = self.cdf_logits(upper)
@@ -113,7 +114,7 @@ class DeepFactorizedEntropyModelBase(continuous.ContinuousEntropyModel):
 
   def bin_bits(self,
                center: ArrayLike,
-               temperature: Optional[ArrayLike] = None) -> Array:
+               temperature: ArrayLike | None = None) -> Array:
     logits_upper, logits_lower = self._upper_lower_logits(center, temperature)
     # sigmoid(u) - sigmoid(l) = sigmoid(-l) - sigmoid(-u)
     condition = logits_upper <= -logits_lower
@@ -123,7 +124,7 @@ class DeepFactorizedEntropyModelBase(continuous.ContinuousEntropyModel):
 
   def bin_prob(self,
                center: ArrayLike,
-               temperature: Optional[ArrayLike] = None) -> Array:
+               temperature: ArrayLike | None = None) -> Array:
     logits_upper, logits_lower = self._upper_lower_logits(center, temperature)
     # sigmoid(u) - sigmoid(l) = sigmoid(-l) - sigmoid(-u)
     sgn = -jnp.sign(logits_upper + logits_lower)

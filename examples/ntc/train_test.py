@@ -1,10 +1,9 @@
 """Tests of the training code."""
 
-import jax
-from jax import numpy as jnp
-
 import config
+import jax
 import train_lib
+from jax import numpy as jnp
 
 
 def mock_dataset(shape):

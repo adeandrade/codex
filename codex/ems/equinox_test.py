@@ -15,11 +15,12 @@
 """Tests of Equinox entropy models."""
 
 import chex
-from codex.ems import equinox as ems
 import distrax
 import equinox as eqx
 import jax
 import jax.numpy as jnp
+
+from codex.ems import equinox as ems
 
 Array = jax.Array
 

@@ -14,16 +14,15 @@
 # ==============================================================================
 """Entropy models as Equinox modules."""
 
-from typing import List, Tuple
-from codex.ems import deep_factorized as _deep_factorized
-from codex.ems import fourier as _fourier
+
 import equinox as _eqx
 import jax as _jax
 
+from codex.ems import deep_factorized as _deep_factorized
+from codex.ems import fourier as _fourier
+
 # pylint:disable=unused-import,g-importing-member,g-bad-import-order
-from codex.ems.continuous import ContinuousEntropyModel
-from codex.ems.distribution import DistributionEntropyModel
-from codex.ems.distribution import scale_param
+
 # pylint:enable=unused-import,g-importing-member,g-bad-import-order
 
 Array = _jax.Array
@@ -31,14 +30,14 @@ Array = _jax.Array
 
 class MonotonicMLP(_deep_factorized.MonotonicMLPBase, _eqx.Module):
   """MLP that implements monotonically increasing functions by construction."""
-  matrices: List[Array]
-  biases: List[Array]
-  factors: List[Array]
+  matrices: list[Array]
+  biases: list[Array]
+  factors: list[Array]
 
   def __init__(self,
                rng,
                num_mlps: int,
-               num_units: Tuple[int, ...],
+               num_units: tuple[int, ...],
                init_scale: float):
     """Initializes the MLP.
 
@@ -96,7 +95,7 @@ class DeepFactorizedEntropyModel(
   def __init__(self,
                rng,
                num_pdfs: int,
-               num_units: Tuple[int, ...] = (3, 3, 3),
+               num_units: tuple[int, ...] = (3, 3, 3),
                init_scale: float = 10.):
     """Initializes the model.
 

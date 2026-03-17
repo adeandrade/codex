@@ -14,12 +14,12 @@
 # ==============================================================================
 """Operations."""
 
-from codex.ops.activation import verysoftplus
-from codex.ops.gradient import lower_limit
-from codex.ops.gradient import perturb_and_apply
-from codex.ops.gradient import upper_limit
-from codex.ops.quantization import soft_round
-from codex.ops.quantization import soft_round_conditional_mean
-from codex.ops.quantization import soft_round_inverse
-from codex.ops.quantization import ste_argmax
-from codex.ops.quantization import ste_round
+from codex.ops.activation import verysoftplus as verysoftplus
+from codex.ops.gradient import lower_limit as lower_limit
+from codex.ops.gradient import perturb_and_apply as perturb_and_apply
+from codex.ops.gradient import upper_limit as upper_limit
+from codex.ops.quantization import soft_round as soft_round
+from codex.ops.quantization import soft_round_conditional_mean as soft_round_conditional_mean
+from codex.ops.quantization import soft_round_inverse as soft_round_inverse
+from codex.ops.quantization import ste_argmax as ste_argmax
+from codex.ops.quantization import ste_round as ste_round

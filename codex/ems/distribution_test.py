@@ -15,11 +15,13 @@
 """Tests for distribution entropy model."""
 
 import dataclasses
+
 import chex
-from codex.ems import distribution
 import distrax
 import jax
 import jax.numpy as jnp
+
+from codex.ems import distribution
 
 ArrayLike = jax.typing.ArrayLike
 

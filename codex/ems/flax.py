@@ -14,16 +14,15 @@
 # ==============================================================================
 """Entropy models as Flax modules."""
 
-from typing import Tuple
+
+import jax as _jax
+from flax import linen as _nn
+
 from codex.ems import deep_factorized as _deep_factorized
 from codex.ems import fourier as _fourier
-from flax import linen as _nn
-import jax as _jax
 
 # pylint:disable=unused-import,g-importing-member,g-bad-import-order
-from codex.ems.continuous import ContinuousEntropyModel
-from codex.ems.distribution import DistributionEntropyModel
-from codex.ems.distribution import scale_param
+
 # pylint:enable=unused-import,g-importing-member,g-bad-import-order
 
 
@@ -41,7 +40,7 @@ class MonotonicMLP(_deep_factorized.MonotonicMLPBase, _nn.Module):
       training.
   """
   num_mlps: int
-  num_units: Tuple[int, ...]
+  num_units: tuple[int, ...]
   init_scale: float
 
   def setup(self):
@@ -108,7 +107,7 @@ class DeepFactorizedEntropyModel(
       training.
   """
   num_pdfs: int
-  num_units: Tuple[int, ...] = (3, 3, 3)
+  num_units: tuple[int, ...] = (3, 3, 3)
   init_scale: float = 10.
 
   def setup(self):

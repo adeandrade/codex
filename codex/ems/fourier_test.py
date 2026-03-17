@@ -15,12 +15,12 @@
 """Tests of Fourier basis entropy models."""
 
 import chex
-from codex.ems import equinox
-from codex.ems import fourier
 import equinox as eqx
 import jax
 import jax.numpy as jnp
 import numpy as np
+
+from codex.ems import equinox, fourier
 
 
 def test_autocorrelate_shape():

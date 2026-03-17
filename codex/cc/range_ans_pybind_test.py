@@ -1,8 +1,9 @@
 """Tests for python interface."""
 
-from codex.cc import range_ans_pybind
 import numpy as np
 import pytest
+
+from codex.cc import range_ans_pybind
 
 rng = np.random.default_rng()
 

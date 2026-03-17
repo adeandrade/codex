@@ -14,6 +14,6 @@
 # ==============================================================================
 """Entropy models."""
 
-from codex.ems.continuous import ContinuousEntropyModel
-from codex.ems.distribution import DistributionEntropyModel
-from codex.ems.distribution import scale_param
+from codex.ems.continuous import ContinuousEntropyModel as ContinuousEntropyModel
+from codex.ems.distribution import DistributionEntropyModel as DistributionEntropyModel
+from codex.ems.distribution import scale_param as scale_param
