@@ -15,12 +15,12 @@
 """Tests for quantization operations."""
 
 import chex
-from codex.ops import quantization
 import jax
-from jax import nn
-from jax import random
 import jax.numpy as jnp
 import pytest
+from jax import nn, random
+
+from codex.ops import quantization
 
 # TODO(jonarchist): Improve unit tests.
 

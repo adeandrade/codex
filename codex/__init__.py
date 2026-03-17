@@ -16,7 +16,7 @@
 
 __version__ = '0.0.1'
 
-from codex import ecs
-from codex import ems
-from codex import loss
-from codex import ops
+from codex import ecs as ecs
+from codex import ems as ems
+from codex import loss as loss
+from codex import ops as ops

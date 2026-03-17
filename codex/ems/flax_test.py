@@ -15,11 +15,12 @@
 """Tests of Flax entropy models."""
 
 import chex
-from codex.ems import flax as ems
 import distrax
-from flax import linen as nn
 import jax
 import jax.numpy as jnp
+from flax import linen as nn
+
+from codex.ems import flax as ems
 
 
 class TestDistributionEntropyModel:
@@ -37,14 +38,14 @@ class TestDistributionEntropyModel:
 
     return EntropyModel()
 
-  expected_param_shapes = dict(
-      params=dict(
-          EntropyModel_0=dict(
-              loc=(3, 1),
-              log_scale=(2,),
-          )
-      )
-  )
+  expected_param_shapes = {
+      "params": {
+          "EntropyModel_0": {
+              "loc": (3, 1),
+              "log_scale": (2,),
+          }
+      }
+  }
 
   def test_shapes_are_correct(self):
     get_em = self.get_em
@@ -76,22 +77,22 @@ class TestDeepFactorizedEntropyModel(TestDistributionEntropyModel):
   def get_em(self):
     return ems.DeepFactorizedEntropyModel(num_pdfs=2, num_units=(3, 5))
 
-  expected_param_shapes = dict(
-      params=dict(
-          DeepFactorizedEntropyModel_0=dict(
-              cdf_logits=dict(
-                  matrix_0=(2, 3, 1),
-                  matrix_1=(2, 5, 3),
-                  matrix_2=(2, 1, 5),
-                  bias_0=(2, 3),
-                  bias_1=(2, 5),
-                  bias_2=(2, 1),
-                  factor_0=(2, 3),
-                  factor_1=(2, 5),
-              ),
-          )
-      )
-  )
+  expected_param_shapes = {
+      "params": {
+          "DeepFactorizedEntropyModel_0": {
+              "cdf_logits": {
+                  "matrix_0": (2, 3, 1),
+                  "matrix_1": (2, 5, 3),
+                  "matrix_2": (2, 1, 5),
+                  "bias_0": (2, 3),
+                  "bias_1": (2, 5),
+                  "bias_2": (2, 1),
+                  "factor_0": (2, 3),
+                  "factor_1": (2, 5),
+              },
+          }
+      }
+  }
 
 
 class TestPeriodicFourierEntropyModel(TestDistributionEntropyModel):
@@ -99,14 +100,14 @@ class TestPeriodicFourierEntropyModel(TestDistributionEntropyModel):
   def get_em(self):
     return ems.PeriodicFourierEntropyModel(period=2., num_pdfs=2, num_freqs=5)
 
-  expected_param_shapes = dict(
-      params=dict(
-          PeriodicFourierEntropyModel_0=dict(
-              real=(2, 5),
-              imag=(2, 5),
-          )
-      )
-  )
+  expected_param_shapes = {
+      "params": {
+          "PeriodicFourierEntropyModel_0": {
+              "real": (2, 5),
+              "imag": (2, 5),
+          }
+      }
+  }
 
 
 class TestRealMappedFourierEntropyModel(TestDistributionEntropyModel):
@@ -114,13 +115,13 @@ class TestRealMappedFourierEntropyModel(TestDistributionEntropyModel):
   def get_em(self):
     return ems.RealMappedFourierEntropyModel(num_pdfs=2, num_freqs=5)
 
-  expected_param_shapes = dict(
-      params=dict(
-          RealMappedFourierEntropyModel_0=dict(
-              real=(2, 5),
-              imag=(2, 5),
-              offset=(2,),
-              scale=(2,),
-          )
-      )
-  )
+  expected_param_shapes = {
+      "params": {
+          "RealMappedFourierEntropyModel_0": {
+              "real": (2, 5),
+              "imag": (2, 5),
+              "offset": (2,),
+              "scale": (2,),
+          }
+      }
+  }

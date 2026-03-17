@@ -1,16 +1,14 @@
 """Runs an NTC training loop."""
 
 import os
-from absl import app
-from absl import flags
-from absl import logging
+
 import jax
-from ml_collections import config_flags
 import numpy as np
 import tensorflow as tf
 import tensorflow_datasets as tfds
-
 import train_lib
+from absl import app, flags, logging
+from ml_collections import config_flags
 
 config_flags.DEFINE_config_file("config")
 flags.DEFINE_string(
@@ -41,8 +39,7 @@ def load_training_set(patch_size, batch_size, shuffle_size):
     shape = tf.math.minimum(tf.cast(tf.round(shape), tf.int32), patch_size)
     image = tf.image.resize(image, shape, method="bilinear", antialias=True)
     image = tf.image.random_crop(image, (patch_size, patch_size, 3))
-    image = tf.transpose(image, (2, 0, 1)) / 255
-    return image
+    return tf.transpose(image, (2, 0, 1)) / 255
 
   ds = tfds.load("clic", split="train", shuffle_files=True)
   ds = ds.repeat()
@@ -50,8 +47,7 @@ def load_training_set(patch_size, batch_size, shuffle_size):
   ds = ds.map(image_preprocess)
   ds = ds.shuffle(shuffle_size)
   ds = ds.batch(batch_size, drop_remainder=True)
-  ds = ds.prefetch(2)
-  return ds
+  return ds.prefetch(2)
 
 
 def main(_):

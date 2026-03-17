@@ -14,12 +14,13 @@
 # ==============================================================================
 """Fourier basis entropy models."""
 
-from typing import Optional
+
+import jax
+import jax.numpy as jnp
+from jax import nn
+
 from codex.ems import continuous
 from codex.ops import quantization
-import jax
-from jax import nn
-import jax.numpy as jnp
 
 Array = jax.Array
 ArrayLike = jax.typing.ArrayLike
@@ -50,7 +51,7 @@ def autocorrelate(sequence: Array, precision=None) -> Array:
   )[0]
 
 
-def periodic_prob(coef: Array, x: Array, y: Optional[Array] = None) -> Array:
+def periodic_prob(coef: Array, x: Array, y: Array | None = None) -> Array:
   """Evaluates PDF or difference of CDFs of a periodic Fourier basis density.
 
   This function assumes the model is periodic with period 2.
@@ -111,7 +112,7 @@ class PeriodicFourierEntropyModelBase(continuous.ContinuousEntropyModel):
 
   def bin_prob(self,
                center: ArrayLike,
-               temperature: Optional[ArrayLike] = None) -> Array:
+               temperature: ArrayLike | None = None) -> Array:
     center, temperature = self._maybe_upcast((center, temperature))
 
     # Get and transform model parameters.
@@ -131,7 +132,7 @@ class PeriodicFourierEntropyModelBase(continuous.ContinuousEntropyModel):
 
   def bin_bits(self,
                center: ArrayLike,
-               temperature: Optional[ArrayLike] = None,
+               temperature: ArrayLike | None = None,
                eps: float = 1e-20) -> Array:
     p = self.bin_prob(center, temperature)
     p = jnp.maximum(p, eps)
@@ -160,7 +161,7 @@ class RealMappedFourierEntropyModelBase(continuous.ContinuousEntropyModel):
 
   def bin_prob(self,
                center: ArrayLike,
-               temperature: Optional[ArrayLike] = None) -> Array:
+               temperature: ArrayLike | None = None) -> Array:
     center, temperature = self._maybe_upcast((center, temperature))
 
     # Get and transform model parameters.
@@ -181,7 +182,7 @@ class RealMappedFourierEntropyModelBase(continuous.ContinuousEntropyModel):
 
   def bin_bits(self,
                center: ArrayLike,
-               temperature: Optional[ArrayLike] = None,
+               temperature: ArrayLike | None = None,
                eps: float = 1e-20) -> Array:
     p = self.bin_prob(center, temperature)
     p = jnp.maximum(p, eps)

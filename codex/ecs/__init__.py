@@ -14,5 +14,5 @@
 # ==============================================================================
 """Entropy coders."""
 
-from codex.ecs.range_ans import quantize_distribution
-from codex.ecs.range_ans import RangeAnsStack
+from codex.ecs.range_ans import RangeAnsStack as RangeAnsStack
+from codex.ecs.range_ans import quantize_distribution as quantize_distribution

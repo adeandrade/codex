@@ -14,8 +14,9 @@
 # ==============================================================================
 """Tests for neural network operations."""
 
-from codex.ops import activation
 from jax import random
+
+from codex.ops import activation
 
 
 def test_verysoftplus():

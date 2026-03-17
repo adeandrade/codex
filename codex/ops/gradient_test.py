@@ -15,11 +15,12 @@
 """Tests for special gradient operations."""
 
 import chex
-from codex.ops import gradient
 import flax.linen as nn
 import jax
-from jax import random
 import jax.numpy as jnp
+from jax import random
+
+from codex.ops import gradient
 
 
 def test_upper_limit_has_correct_outputs_and_gradients():

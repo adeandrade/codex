@@ -14,6 +14,6 @@
 # ==============================================================================
 """Loss functions."""
 
-from codex.loss.wasserstein import lowpass
-from codex.loss.wasserstein import multi_wasserstein_distortion
-from codex.loss.wasserstein import wasserstein_distortion
+from codex.loss.wasserstein import lowpass as lowpass
+from codex.loss.wasserstein import multi_wasserstein_distortion as multi_wasserstein_distortion
+from codex.loss.wasserstein import wasserstein_distortion as wasserstein_distortion

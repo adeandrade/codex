@@ -23,13 +23,13 @@ E. Agustsson, L. Theis:
 https://proceedings.neurips.cc/paper/2020/hash/92049debbe566ca5782a3045cf300a3c-Abstract.html
 """
 
-import codex
-from codex.ems import equinox as ems
 import distrax
 import equinox as eqx
 import jax
 from jax import numpy as jnp
 
+import codex
+from codex.ems import equinox as ems
 
 Array = jax.Array
 
@@ -196,10 +196,10 @@ class FactorizedPriorModel(eqx.Module):
     rng = jax.random.split(rng, 3)
     self.analysis = AnalysisTransform(rng[0], x_channels, y_channels)
     self.synthesis = SynthesisTransform(rng[1], y_channels, x_channels)
-    em_cls = dict(
-        fourier=ems.RealMappedFourierEntropyModel,
-        deep=ems.DeepFactorizedEntropyModel,
-    )[em_y]
+    em_cls = {
+        "fourier": ems.RealMappedFourierEntropyModel,
+        "deep": ems.DeepFactorizedEntropyModel,
+    }[em_y]
     self.em_y = em_cls(
         rng=rng[2],
         num_pdfs=y_channels,
@@ -224,10 +224,10 @@ class FactorizedPriorModel(eqx.Module):
 
     distortion = jnp.square(x - x_rec).sum() / num_pixels
 
-    return x_rec, dict(
-        rate=rate,
-        distortion=distortion,
-    )
+    return x_rec, {
+        "rate": rate,
+        "distortion": distortion,
+    }
 
 
 class HyperPriorModel(eqx.Module):
@@ -249,10 +249,10 @@ class HyperPriorModel(eqx.Module):
         rng[2], y_channels, z_channels)
     self.hyper_synthesis = HyperSynthesisTransform(
         rng[3], z_channels, 2 * y_channels)
-    em_cls = dict(
-        fourier=ems.RealMappedFourierEntropyModel,
-        deep=ems.DeepFactorizedEntropyModel,
-    )[em_z]
+    em_cls = {
+        "fourier": ems.RealMappedFourierEntropyModel,
+        "deep": ems.DeepFactorizedEntropyModel,
+    }[em_z]
     self.em_z = em_cls(
         rng=rng[4],
         num_pdfs=z_channels,
@@ -296,12 +296,12 @@ class HyperPriorModel(eqx.Module):
 
     distortion = jnp.square(x - x_rec).sum() / num_pixels
 
-    return x_rec, dict(
-        rate=rate,
-        rate_y=rate_y,
-        rate_z=rate_z,
-        distortion=distortion,
-    )
+    return x_rec, {
+        "rate": rate,
+        "rate_y": rate_y,
+        "rate_z": rate_z,
+        "distortion": distortion,
+    }
 
 
 def loss_fn(model, x, lmbda, rng, t):
